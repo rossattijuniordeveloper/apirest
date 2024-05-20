@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.parapar.app.api.skills.dtos.SkillResponse;
 import br.com.parapar.app.api.skills.mappers.SkillMapper;
+import br.com.parapar.app.core.exceptions.SkillNotFoundException;
 import br.com.parapar.app.core.repositories.SkillRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -46,6 +48,11 @@ public class SkillRestController {
         .map(skillMapper::toSkillResponse)        
         .toList();        
     }
-
+    @GetMapping("/{id}")
+    public SkillResponse findById(@PathVariable Long id) {
+        return skillRepository.findById(id)
+        .map(skillMapper::toSkillResponse)
+        .orElseThrow(SkillNotFoundException::new);
+    }
 
 }

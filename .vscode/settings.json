@@ -15,5 +15,10 @@
         }
     ],
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "rest-client.environmentVariables": {
+        "$shared": {
+            "baseUrl": "http://localhost:8080"
+        }
+    }
 }
