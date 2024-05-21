@@ -12,9 +12,12 @@ Content-Type: application/json
 }
 
 ###
-PUT  {{baseUrl}}  /api/skills/9
+PUT  {{baseUrl}}/api/skills/9
 Content-Type: application/json
 
 {
     "name": "Dart-Flutter Kotlin"
 }
+
+###
+DELETE {{baseUrl}}/api/skills/7
