@@ -76,8 +76,10 @@ public class SkillRestController {
      */
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public SkillResponse update(@PathVariable Long id,
-    @Valid @RequestBody SkillRequest skillRequest ){
+    public SkillResponse update(
+        @PathVariable Long id,
+        @Valid @RequestBody SkillRequest skillRequest 
+    ){
         var skill = skillRepository.findById(id)
         .orElseThrow(SkillNotFoundException::new);
         BeanUtils.copyProperties(skillRequest,skill,"id");
