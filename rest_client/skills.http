@@ -3,3 +3,10 @@ GET {{baseUrl}}/api/skills
 ###
 GET {{baseUrl}}/api/skills/3
 
+###
+POST {{baseUrl}}/api/skills
+Content-Type: application/json
+
+{
+    "name": "Dart-Flutter"
+}

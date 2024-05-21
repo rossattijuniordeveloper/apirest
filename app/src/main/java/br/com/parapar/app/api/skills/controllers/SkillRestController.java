@@ -2,19 +2,28 @@ package br.com.parapar.app.api.skills.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.parapar.app.api.skills.dtos.SkillRequest;
 import br.com.parapar.app.api.skills.dtos.SkillResponse;
 import br.com.parapar.app.api.skills.mappers.SkillMapper;
 import br.com.parapar.app.core.exceptions.SkillNotFoundException;
 import br.com.parapar.app.core.repositories.SkillRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 
 //@Controller
 //@ResponseBody
@@ -53,6 +62,27 @@ public class SkillRestController {
         return skillRepository.findById(id)
         .map(skillMapper::toSkillResponse)
         .orElseThrow(SkillNotFoundException::new);
+    }
+    @PostMapping   
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public SkillResponse create(@Valid @RequestBody SkillRequest skillRequest){
+        var skill = skillMapper.toSkill(skillRequest);
+        skill = skillRepository.save(skill);
+        return  skillMapper.toSkillResponse(skill);            
+    }
+    /**
+     * @param id
+     * @return
+     */
+    @PutMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public SkillResponse update(@PathVariable Long id,
+    @Valid @RequestBody SkillRequest skillRequest ){
+        var skill = skillRepository.findById(id)
+        .orElseThrow(SkillNotFoundException::new);
+        BeanUtils.copyProperties(skillRequest,skill,"id");
+        skill = skillRepository.save(skill);
+        return skillMapper.toSkillResponse(skill);
     }
 
 }
