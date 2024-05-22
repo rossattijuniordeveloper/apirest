@@ -8,16 +8,16 @@ POST {{baseUrl}}/api/skills
 Content-Type: application/json
 
 {
-    "name": "Dart-Flutter"
+    "name": "PHP"
 }
 
 ###
-PUT  {{baseUrl}}/api/skills/9
+PUT  {{baseUrl}}/api/skills/11
 Content-Type: application/json
 
 {
-    "name": "Dart-Flutter Kotlin"
+    "name": "PHP"
 }
 
 ###
-DELETE {{baseUrl}}/api/skills/7
+DELETE {{baseUrl}}/api/skills/6
