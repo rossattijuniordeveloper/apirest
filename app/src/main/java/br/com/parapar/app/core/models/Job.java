@@ -39,6 +39,10 @@ public class Job {
     @Column(nullable = false, length = 100)
     private String title;
 
+    @ToString.Include
+    @Column(nullable = false)
+    private String description;
+
     @Column(nullable = false,length = 50)
     private String company;
 
