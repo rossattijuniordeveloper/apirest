@@ -1,0 +1,5 @@
+GET {{baseUrl}}/api/jobs
+
+###
+GET {{baseUrl}}/api/jobs/1
+ 
