@@ -7,5 +7,6 @@ import br.com.parapar.app.core.models.Job;
 public interface JobMapper {
     
     JobResponse toJobResponse(Job job);
+    
     Job toJob(JobRequest jobRequest);
 }
