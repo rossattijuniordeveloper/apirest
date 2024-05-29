@@ -16,6 +16,6 @@ public class ErrorResponse {
     private String message;
 
     @Builder.Default
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private LocalDateTime timestamp = LocalDateTime.now();    
 
 }
