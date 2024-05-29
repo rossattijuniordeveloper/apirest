@@ -11,16 +11,16 @@ Content-Type: application/json
     "title": "Dev Front-End JavaScript",
     "description" : "Vaga para Dev Front-End Java",
     "company": "ParaPar Tecnologia",
-    "location": "Cuiabá-MT",
-    "type": "FULL_TIME",    
+    "location": "",
+    "type": "",    
     "level":"MID_LEVEL",
     "salary":"7500.00",
-    "skills": [2,3
+    "skills": [
     ]
 }
 
 ###
-PUT {{baseUrl}}/api/jobs/3
+PUT {{baseUrl}}/api/jobs/300
 Content-Type: application/json
 
 {

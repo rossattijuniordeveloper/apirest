@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ###
-PUT  {{baseUrl}}/api/skills/11
+PUT  {{baseUrl}}/api/skills/1100
 Content-Type: application/json
 
 {
