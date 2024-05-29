@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JobResponse {
     
+    private Long id;
+    
     private String title;
 
     private String description;

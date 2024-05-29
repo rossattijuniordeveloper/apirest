@@ -18,3 +18,23 @@ Content-Type: application/json
     "skills": [2,3
     ]
 }
+
+###
+PUT {{baseUrl}}/api/jobs/3
+Content-Type: application/json
+
+{
+    "title": "Dev Front-End Java/Spring( Thymeleaf ) Html,Css,JS",
+    "description" : "Vaga para Dev Front-End Java",
+    "company": "ParaPar Tecnologia",
+    "location": "Assuncion-PY",
+    "type": "FULL_TIME",
+    "level":"SENIOR",
+    "salary":"17500.00",
+    "skills": [2,3
+    ]
+}
+
+###
+DELETE {{baseUrl}}/api/jobs/3
+
