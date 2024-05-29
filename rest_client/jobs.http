@@ -1,18 +1,18 @@
 GET {{baseUrl}}/api/jobs
 
 ###
-GET {{baseUrl}}/api/jobs/1
+GET {{baseUrl}}/api/jobs/200
 
 ###
 POST  {{baseUrl}}/api/jobs
 Content-Type: application/json
 
 {
-    "title": "Dev Front-End Java/Spring ( Thymeleaf )",
+    "title": "Dev Front-End JavaScript",
     "description" : "Vaga para Dev Front-End Java",
     "company": "ParaPar Tecnologia",
-    "location": "Assuncion-PY",
-    "type": "FULL_TIME",
+    "location": "Cuiabá-MT",
+    "type": "FULL_TIME",    
     "level":"MID_LEVEL",
     "salary":"7500.00",
     "skills": [2,3
@@ -38,3 +38,5 @@ Content-Type: application/json
 ###
 DELETE {{baseUrl}}/api/jobs/3
 
+###
+GET  {{baseUrl}}/api/jobs/2/skills

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.parapar.app.api.jobs.dtos.JobRequest;
 import br.com.parapar.app.api.jobs.dtos.JobResponse;
 import br.com.parapar.app.api.jobs.mappers.JobMapper;
+import br.com.parapar.app.api.skills.dtos.SkillResponse;
+import br.com.parapar.app.api.skills.mappers.SkillMapper;
 import br.com.parapar.app.core.exceptions.JobNotFoundException;
 import br.com.parapar.app.core.repositories.JobRepository;
 import jakarta.validation.Valid;
@@ -28,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class JobRestController {
     private final JobMapper jobMapper;
     private final JobRepository jobRepository;
+    private final SkillMapper skillMapper;
 
     @GetMapping
     public List<JobResponse> findAll() {
@@ -68,5 +71,15 @@ public class JobRestController {
         var job = jobRepository.findById(id)
         .orElseThrow(JobNotFoundException::new);
         jobRepository.delete(job);
-    }    
+    }
+    @GetMapping("/{id}/skills")   
+    public List<SkillResponse> findSkillsByJobId(@PathVariable Long id){
+        var job = jobRepository.findById(id)
+        .orElseThrow(JobNotFoundException::new);
+        return job.getSkills()
+        .stream()
+        .map(skillMapper::toSkillResponse)
+        .toList();       
+    }
+    
 }

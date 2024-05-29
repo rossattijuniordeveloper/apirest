@@ -1,7 +1,7 @@
 GET {{baseUrl}}/api/skills
 
 ###
-GET {{baseUrl}}/api/skills/3
+GET {{baseUrl}}/api/skills/200
 
 ###
 POST {{baseUrl}}/api/skills
