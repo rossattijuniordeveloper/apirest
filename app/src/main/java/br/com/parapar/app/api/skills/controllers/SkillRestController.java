@@ -1,9 +1,13 @@
 package br.com.parapar.app.api.skills.controllers;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,17 +55,57 @@ public class SkillRestController {
     @GetMapping    
 //    @ResponseBody
     public List<SkillResponse> findAll(){
-        return skillRepository.findAll()
+        var skills = skillRepository.findAll()
         .stream()
         .map(skillMapper::toSkillResponse)        
-        .toList();        
+        .toList();         
+        skills.forEach( skill -> {
+            var id = skill.getId();
+
+            var selflink  = linkTo(
+                methodOn(SkillRestController.class).findById(id))
+                .withSelfRel()
+                .withType("GET");
+
+            var updatelink = linkTo(methodOn(SkillRestController.class).update(id,null))
+            .withRel("update")    
+            .withType("PUT");
+
+            var deleteLink = linkTo(methodOn(SkillRestController.class).delete(id))
+            .withRel("delete")
+            .withType("DELETE");
+
+            skill.add(selflink,updatelink,deleteLink);
+
+            
+        });
+        return skills;
     }
+
     @GetMapping("/{id}")
     public SkillResponse findById(@PathVariable Long id) {
-        return skillRepository.findById(id)
+        var skill = skillRepository.findById(id)
         .map(skillMapper::toSkillResponse)
         .orElseThrow(SkillNotFoundException::new);
+
+        var selflink  = linkTo(
+            methodOn(SkillRestController.class).findById(id))
+            .withSelfRel()
+            .withType("GET");
+
+        var updatelink = linkTo(methodOn(SkillRestController.class).update(id,null))
+        .withRel("update")    
+        .withType("PUT");
+
+        var deleteLink = linkTo(methodOn(SkillRestController.class).delete(id))
+        .withRel("delete")
+        .withType("DELETE");
+
+        skill.add(selflink,updatelink,deleteLink);
+
+        return skill;
     }
+
     @PostMapping   
     @ResponseStatus(code = HttpStatus.CREATED)
     public SkillResponse create(@Valid @RequestBody SkillRequest skillRequest){
@@ -69,10 +113,7 @@ public class SkillRestController {
         skill = skillRepository.save(skill);
         return  skillMapper.toSkillResponse(skill);            
     }
-    /**
-     * @param id
-     * @return
-     */
+
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public SkillResponse update(
@@ -85,13 +126,15 @@ public class SkillRestController {
         skill = skillRepository.save(skill);
         return skillMapper.toSkillResponse(skill);
     }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id
+    public ResponseEntity<?> delete(@PathVariable Long id
     ){
         var skill = skillRepository.findById(id)
         .orElseThrow(SkillNotFoundException::new);
         skillRepository.delete(skill);        
+        return ResponseEntity.noContent().build();
     }
 
 }

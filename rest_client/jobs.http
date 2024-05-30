@@ -1,7 +1,7 @@
 GET {{baseUrl}}/api/jobs
 
 ###
-GET {{baseUrl}}/api/jobs/200
+GET {{baseUrl}}/api/jobs/3
 
 ###
 POST  {{baseUrl}}/api/jobs
