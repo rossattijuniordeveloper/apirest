@@ -6,6 +6,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 
+import br.com.parapar.app.api.skills.assemblers.SkillAssembler;
 import br.com.parapar.app.api.skills.dtos.SkillRequest;
 import br.com.parapar.app.api.skills.dtos.SkillResponse;
 import br.com.parapar.app.api.skills.mappers.SkillMapper;
@@ -36,8 +40,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/skills")
 public class SkillRestController {
     
-    private final SkillMapper skillMapper;
+    private final SkillMapper skillMapper;    
     private final SkillRepository skillRepository;
+    
 
 
     /* uma forma de retorno 
@@ -52,13 +57,18 @@ public class SkillRestController {
     */
     // outra forma de retorno sem ResponseEntity na declaração do metodo e...
     // sem criação da variavel skills e inclusão da anotação @ResponseBody no Nivel da Classe 
+    /**
+     * @return
+     */
     @GetMapping    
 //    @ResponseBody
     public List<SkillResponse> findAll(){
+//    public CollectionModel<EntityModel<SkillResponse>> findAll(){
         var skills = skillRepository.findAll()
         .stream()
         .map(skillMapper::toSkillResponse)        
         .toList();         
+
         skills.forEach( skill -> {
             var id = skill.getId();
 
@@ -79,6 +89,7 @@ public class SkillRestController {
 
             
         });
+        
         return skills;
     }
 
