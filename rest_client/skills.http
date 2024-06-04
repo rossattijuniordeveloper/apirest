@@ -1,4 +1,4 @@
-GET {{baseUrl}}/api/skills
+GET {{baseUrl}}/api/skills?tamanho=10&pagina=2
 
 // <!-- GET {{baseUrl}}/api/skills?size=2&page=3 -->
 
