@@ -6,6 +6,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,7 @@ public class SkillRestController {
     
     private final SkillMapper skillMapper;    
     private final SkillRepository skillRepository;
+    private final PagedResourcesAssembler<SkillResponse> pagedResourcesAssembler;
     
 
 
@@ -62,9 +65,9 @@ public class SkillRestController {
      */
     @GetMapping    
 //    @ResponseBody
-    public List<SkillResponse> findAll(){
-//    public CollectionModel<EntityModel<SkillResponse>> findAll(){
-        var skills = skillRepository.findAll()
+//    public List<SkillResponse> findAll(Pageable pageable){
+    public List<SkillResponse> findAll(Pageable pageable){
+        var skills = skillRepository.findAll(pageable)
         .stream()
         .map(skillMapper::toSkillResponse)        
         .toList();         
@@ -91,10 +94,12 @@ public class SkillRestController {
         });
         
         return skills;
+//        return pagedResourcesAssembler.toModel()
     }
 
     @GetMapping("/{id}")
     public SkillResponse findById(@PathVariable Long id) {
+        
         var skill = skillRepository.findById(id)
         .map(skillMapper::toSkillResponse)
         .orElseThrow(SkillNotFoundException::new);
